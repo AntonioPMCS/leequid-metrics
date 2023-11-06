@@ -1,23 +1,13 @@
-import logo from './logo.svg';
+import SketchArea from './components/SketchArea'
 import './App.css';
+import { Blockchain } from './utils/Blockchain';
 
 function App() {
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+      <h1>LEEQUID Metrics</h1>
+      <SketchArea blockchain={new Blockchain()}/>
     </div>
   );
 }
