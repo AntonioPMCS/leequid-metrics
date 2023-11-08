@@ -1,6 +1,7 @@
 import { ethers } from 'ethers';
-import { PROVIDERADDRESS, PAIRADDRESS, SLOTSIN7DAYS } from './constants'
+import { PROVIDERADDRESS, PAIRADDRESS, SLOTSIN7DAYS, WETH10ADDRESS } from './constants'
 import pairABI from '../contracts/abi/pairABI'
+import Weth10ABI from '../contracts/abi/Weth10ABI';
 
 export class Blockchain {
    provider = {}
@@ -11,7 +12,11 @@ export class Blockchain {
       this.pair = new ethers.BaseContract(PAIRADDRESS,
                                                 pairABI,
                                                 this.provider
-                                          );
+                                          );                                 
+      this.weth10 = new ethers.BaseContract(WETH10ADDRESS,
+         Weth10ABI,
+         this.provider
+      );
    }
 
    async tvl() {
@@ -19,9 +24,11 @@ export class Blockchain {
       // To calculate the real TVL, one would have to consider the amounts
       // of both LYX and sLYX, convert to a common currency like dollar,
       // and sum the two.
-      const totalSupply = await this.pair.totalSupply();
-      console.log("Total liquidity in the pool: " + ethers.formatUnits(totalSupply, "ether")*2 + " (sLYX + LYX)");
-      return ethers.formatUnits(totalSupply, "ether") * 2;
+      const pairSLYX = await this.pair.totalSupply();
+      const pairAddress = await this.pair.getAddress();
+      const pairLYX = await this.weth10.balanceOf(pairAddress);
+      console.log("Total liquidity in the pool: " + ethers.formatUnits(pairSLYX + pairLYX, "ether") + " (sLYX + LYX)");
+      return ethers.formatUnits(pairSLYX + pairLYX, "ether");
    }
 
    async sevenDayVolume() {
