@@ -1,13 +1,13 @@
 import React from 'react'
 import functionPlot from 'function-plot'
 
-const Graph = (props) => {
+const Graph = ({sevenDayVolume}) => {
    
    const plot = () => {
       functionPlot({
          target: '#root',
          data: [{
-            fn: props.sevenDayVolume.toString()
+            fn: sevenDayVolume.toString()
          }]
    
       })

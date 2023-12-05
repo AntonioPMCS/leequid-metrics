@@ -1,3 +1,5 @@
+import { ethers } from "ethers";
+
 export const Utils = {
    lpFeesAPR: function(fee, tvl, volume) {
       if (tvl === 0) { return 0.00 }
@@ -52,7 +54,12 @@ export const Utils = {
    
       // Return net yearly staking reward percentage
       return netRewardPerYear / 10e8 / validatorDeposit;
-    }
+    },
+
+    weiToEth: function(valueInWei) {
+      return ethers.FixedNumber.fromValue(valueInWei, 18);
+    },
+
 }
 
 
