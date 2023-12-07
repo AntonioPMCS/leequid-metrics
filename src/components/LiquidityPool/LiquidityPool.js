@@ -1,12 +1,11 @@
 import { React, useState, useEffect } from 'react'
-import { Utils } from '../utils/Utils';
+import { Utils } from '../../utils/Utils';
 import Controls from './Controls'
-import Graph from './Graph';
 import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
-import { LPFEE } from '../utils/constants';
+import { LPFEE } from '../../utils/constants';
 
 const LiquidityPool = ({blockchain, lyxPrice, stakingAPR}) => {
 
@@ -80,13 +79,15 @@ const LiquidityPool = ({blockchain, lyxPrice, stakingAPR}) => {
 
    return (
       <div>
-         <Box component="section" sx={{ p: 2, border: '1px dashed grey' }}>
+         <Box component="section">
          <Container sx={{ 'borderBottom': 'dashed red' }}>
+            <h2>SLYX-LYX Pair</h2>
             <Stack 
              direction="row" 
              spacing={3} 
             >
-               <h2>sLYX - LYX Liquidity Pool</h2>
+               <p>1 sLYX = 1.00303 LYX</p>
+               <p>1 LYX = 0.99697 sLYX</p>
                <Button variant='filled' size='small' onClick={handleRestoreButton} >
                   🔄 restore current values
                </Button>
@@ -139,7 +140,6 @@ const LiquidityPool = ({blockchain, lyxPrice, stakingAPR}) => {
             </Stack>
          }
          </Box>
-      <Graph sevenDayVolume={sevenDayVolume} />
       </div>
    )
    }

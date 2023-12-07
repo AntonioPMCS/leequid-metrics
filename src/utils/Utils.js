@@ -60,6 +60,10 @@ export const Utils = {
       return ethers.FixedNumber.fromValue(valueInWei, 18);
     },
 
+    weiToEthString: function(valueInWei) {
+      return ethers.formatEther(valueInWei)
+    }
+
 }
 
 

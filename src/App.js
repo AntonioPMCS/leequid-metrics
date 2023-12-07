@@ -6,7 +6,7 @@ function App() {
   
   return (
     <div className="container">
-      <h1>LEEQUID Metrics</h1>
+      <h1>Welcome to the LEEQUID Metrics Page</h1>
       <Dashboard blockchain={new Blockchain()}/>
     </div>
   );

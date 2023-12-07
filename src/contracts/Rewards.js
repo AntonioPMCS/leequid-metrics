@@ -24,12 +24,12 @@ export class Rewards {
 
       var now = await this.provider.getBlockNumber();
 
-      return await this.contract.queryFilter("RewardsUpdated(uint256,uint256,uint256,uint256,uint256,uint256)")
+      return (await this.contract.queryFilter("RewardsUpdated(uint256,uint256,uint256,uint256,uint256,uint256)")
             .then((result) => {
                   return result.filter((log) => {
                      return (log.blockNumber > now - SLOTSIN1DAY*days);
                   })  
-            })
+            })).reverse()
    }
 
    async getFormattedRewardUpdates(days = 7) {
