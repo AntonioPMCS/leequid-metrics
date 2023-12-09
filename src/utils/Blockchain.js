@@ -5,11 +5,13 @@ import pairABI from '../contracts/abi/pairABI'
 import {Rewards} from '../contracts/Rewards'
 import {SLYX} from '../contracts/SLYX'
 import {WETH10} from '../contracts/WETH10'
+import {Pool} from '../contracts/Pool'
 
 export class Blockchain {
    Rewards;
    WETH10;
    SLYX;
+   Pool;
    provider = {}
    pair = {}
 
@@ -22,6 +24,10 @@ export class Blockchain {
                                           );           
    }
 
+   getPoolContract() {
+      if (this.Pool) return this.Pool;
+      return this.Pool = new Pool(this.provider, ethers)
+   }
    getRewardsContract() {
       if (this.Rewards) return this.Rewards;
       return this.Rewards = new Rewards(this.provider, ethers)

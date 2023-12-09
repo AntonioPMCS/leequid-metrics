@@ -37,7 +37,7 @@ const RewardUpdates = ({blockchain, weiToEth}) => {
    }, []);
 
    return (
-      <Box sx={{ width:550, marginBottom:5}} >
+      <Box sx={{ width:550, height:370, marginBottom:5}} >
          <h3>Reward Updates Table</h3> 
          {rewardUpdates &&
          <DataGrid
