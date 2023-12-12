@@ -51,15 +51,12 @@ const LiquidityPool = ({blockchain, lyxPrice, stakingAPR}) => {
    return (
       <div>
          <Box component="section">
-         <Container sx={{ 'borderBottom': 'dashed red' }}>
-            <h2>SLYX-LYX Pair</h2>
-            <Stack direction="row" spacing={3} marginBottom="15px">
-               <LiquidityPoolRatio blockchain={blockchain}/>
-               <p>SevenDayVolume: <strong>${new Intl.NumberFormat('en-us').format(sevenDayVolume)}</strong></p> 
-               <p>TVL: <strong>${new Intl.NumberFormat('en-us').format(tvl)}</strong></p> 
-            </Stack>
-            
-         </Container>
+         <h2>SLYX-LYX Pair</h2>
+         <Stack direction="row" spacing={3} marginBottom="15px">
+            <LiquidityPoolRatio blockchain={blockchain}/>
+            <p>7Day Volume: <strong>${new Intl.NumberFormat('en-us').format(sevenDayVolume)}</strong></p> 
+            <p>TVL: <strong>${new Intl.NumberFormat('en-us').format(tvl)}</strong></p> 
+         </Stack>
          <Stack 
             direction={{xs:'column', sm:'column', md:'row'}} 
             spacing={3}

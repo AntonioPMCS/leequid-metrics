@@ -11,7 +11,7 @@ const PendingStake = ({blockchain, width, height}) => {
     <h3>Pending Stake</h3>  
       <Stack direction="row" spacing={3}>
         <p>Active validators: <strong>{pendingStake.activeValidators ? pendingStake.activeValidators.toString() : "loading..."}</strong></p>
-        <p>Pending validators: <strong>{pendingStake.pendingValidators? pendingStake.pendingValidators.toString() : "loading..."}</strong></p>
+        <p>Pending validators: <strong>{pendingStake.pendingValidators === null ? "loading..." : pendingStake.pendingValidators.toString()}</strong></p>
       </Stack> 
       <p>Current dilution: <strong>{pendingStake.ratio}%</strong></p>
       <PendingStakeGauge 

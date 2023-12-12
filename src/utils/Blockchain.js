@@ -19,11 +19,11 @@ export class Blockchain {
       this.provider = new ethers.JsonRpcProvider(PROVIDERADDRESS);    
    }
 
-   getPoolContract() {
+   getPool() {
       if (this.Pool) return this.Pool;
       return this.Pool = new Pool(this.provider, ethers)
    }
-   getRewardsContract() {
+   getRewards() {
       if (this.Rewards) return this.Rewards;
       return this.Rewards = new Rewards(this.provider, ethers)
    }

@@ -13,9 +13,9 @@ const usePendingStake = (blockchain) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const _activeValidators = await blockchain.getPoolContract().getActiveValidators()
-      const _pendingValidators = await blockchain.getPoolContract().getPendingValidators()
-      const _poolBalance = await blockchain.getPoolContract().getBalance()
+      const _activeValidators = await blockchain.getPool().getActiveValidators()
+      const _pendingValidators = await blockchain.getPool().getPendingValidators()
+      const _poolBalance = await blockchain.getPool().getBalance()
       const _ratio = calculatePendingRatio(_activeValidators, _pendingValidators, _poolBalance);
       setPendingStake({
         activeValidators: _activeValidators, 

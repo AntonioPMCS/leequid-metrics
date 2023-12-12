@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { ethers } from 'ethers'
 
 const useStakingTVL = (lyxPrice, blockchain) => {
@@ -7,9 +7,9 @@ const useStakingTVL = (lyxPrice, blockchain) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const _poolBalance = await blockchain.getPoolContract().getBalance();
-        const _rewardBalance = await blockchain.getRewardsContract().getBalance();
-        const _validators =  (await blockchain.getPoolContract().getActiveValidators()) + (await blockchain.getPoolContract().getPendingValidators())
+        const _poolBalance = await blockchain.getPool().getBalance();
+        const _rewardBalance = await blockchain.getRewards().getBalance();
+        const _validators =  (await blockchain.getPool().getActiveValidators()) + (await blockchain.getPool().getPendingValidators())
         const _tvlWei = _poolBalance + _rewardBalance + _validators * ethers.parseUnits("32", "ether")
         const _tvlLyx = ethers.formatEther(_tvlWei);
         const _tvlDollar = _tvlLyx * lyxPrice;

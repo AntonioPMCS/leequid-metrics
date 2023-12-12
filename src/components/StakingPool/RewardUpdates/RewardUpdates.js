@@ -7,7 +7,7 @@ const RewardUpdates = ({blockchain, weiToEth}) => {
 
    async function fetchRewardUpdates() {
       try {
-         let rewardUpdates = await blockchain.getRewardsContract().getRewardUpdates(14);
+         let rewardUpdates = await blockchain.getRewards().getRewardUpdates(14);
          let i = 0;
          let rewardUpdatesFormatted = rewardUpdates.map((log) => {
                let element = {}
