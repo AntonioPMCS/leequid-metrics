@@ -15,6 +15,7 @@ const useLYXPrice = () => {
         })
     } catch (error) {
       console.log(error)
+      return 7.2
     }
   }
 

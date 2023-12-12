@@ -1,11 +1,11 @@
 import rewardsABI from './abi/rewardsABI';
 import { SLOTSIN1DAY } from '../utils/constants';
+import { Contract } from './Contract';
 
-export class Rewards {
+export class Rewards extends Contract {
    address = "0x5D48F7FC221ABcAC5386c374eF723a56AD03D4B4"
    constructor (provider, ethers) {
-      this.provider = provider;
-      this.ethers = ethers;
+      super(provider, ethers)
       this.contract = new ethers.BaseContract(this.address,
          rewardsABI,
          provider
@@ -45,7 +45,5 @@ export class Rewards {
         
       // })
    }
-
-
 
 }

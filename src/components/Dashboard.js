@@ -1,6 +1,6 @@
 import { React, useState, useEffect } from 'react'
 import { Utils } from '../utils/Utils';
-import { CONSENSUS_API_URL, COINGECKO_API_URL, COINGECKO_LYX_ID, COINGECKO_CURRENCY } from '../utils/constants';
+import { CONSENSUS_API_URL} from '../utils/constants';
 import LiquidityPool from './LiquidityPool/LiquidityPool';
 import StakingPool from './StakingPool/StakingPool';
 import useLYXPrice from '../utils/customHooks/useLYXPrice';
@@ -9,7 +9,7 @@ import { Stack } from '@mui/material';
 const Dashboard = ({blockchain}) => {
   const [stakingAPR, setStakingAPR] = useState(null);
   const [leequidDominance, setLeequidDominance] = useState(null)
-  const [sLYXSupply, setSLYXSupply] = useState(null)
+  const [sLYXSupply, setSLYXSupply] = useState(0n)
   const lyxPrice = useLYXPrice()
 
   async function fetchConsensusStats() {
@@ -24,7 +24,7 @@ const Dashboard = ({blockchain}) => {
   async function fetchSLYXSupply() {
     
     try {
-      return blockchain.getSLYXContract().sLYXSupply()
+      return blockchain.getSLYX().totalSupply()
               .then((response) => {
                 console.log(response)
                 setSLYXSupply(response)
@@ -43,7 +43,7 @@ const Dashboard = ({blockchain}) => {
       console.log(currentAPR + "%");
       setStakingAPR(currentAPR);
       const sLYXSupply = await fetchSLYXSupply()
-      setLeequidDominance(sLYXSupply / (consensusStats.data.validatorscount * 32));
+      setLeequidDominance(Number(sLYXSupply * 10000n / (BigInt(consensusStats.data.validatorscount) * Utils.ethToWei('32'))) / 10000);
     }
     init();
   }, []);
@@ -54,12 +54,12 @@ const Dashboard = ({blockchain}) => {
       {lyxPrice && sLYXSupply &&
         <Stack direction="row" spacing={3} marginBottom="15px">
           <p>LYX price: <strong>${lyxPrice.toLocaleString('en-US')}</strong></p>
-          <p>sLYX Total Supply: <strong>{new Intl.NumberFormat('en-us').format(Utils.weiToEthString(sLYXSupply.value)*1)}</strong></p>
+          <p>sLYX Total Supply: <strong>{new Intl.NumberFormat('en-us').format(Number(Utils.weiToEth(sLYXSupply)))}</strong></p>
         </Stack>
          
       }
       {stakingAPR && leequidDominance &&
-        <StakingPool  blockchain={blockchain} stakingAPR={stakingAPR} dominance={leequidDominance}/>
+        <StakingPool  blockchain={blockchain} stakingAPR={stakingAPR} dominance={leequidDominance} lyxPrice={lyxPrice}/>
       }
       { lyxPrice && stakingAPR &&
         <LiquidityPool 

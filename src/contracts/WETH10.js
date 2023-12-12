@@ -1,11 +1,11 @@
+import { Contract } from './Contract';
 import Weth10ABI from './abi/Weth10ABI';
 
-export class WETH10 {
+export class WETH10 extends Contract {
    address = "0x6b6F4cb50e67adb082300b90Af49AF499D41d04E";
 
    constructor (provider, ethers) {
-      this.ethers = ethers;
-      this.provider = provider;
+      super(provider, ethers)
       this.contract = new ethers.BaseContract(this.address,
          Weth10ABI,
          provider
@@ -13,6 +13,6 @@ export class WETH10 {
    }
 
    async balanceOf(address) {
-      return await this.contract.balanceOf(address);
+      return this.contract.balanceOf(address);
    }
 }

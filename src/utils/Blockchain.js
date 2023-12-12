@@ -1,27 +1,22 @@
 import { ethers } from 'ethers';
-import { PROVIDERADDRESS, PAIRADDRESS, SLOTSIN7DAYS } from './constants'
-import pairABI from '../contracts/abi/pairABI'
+import { PROVIDERADDRESS, SLOTSIN7DAYS } from './constants'
 
 import {Rewards} from '../contracts/Rewards'
 import {SLYX} from '../contracts/SLYX'
 import {WETH10} from '../contracts/WETH10'
 import {Pool} from '../contracts/Pool'
+import {Pair} from '../contracts/Pair';
 
 export class Blockchain {
    Rewards;
    WETH10;
    SLYX;
    Pool;
+   Pair;
    provider = {}
-   pair = {}
 
    constructor () {
-      this.provider = new ethers.JsonRpcProvider(PROVIDERADDRESS);
-
-      this.pair = new ethers.BaseContract(PAIRADDRESS,
-                                                pairABI,
-                                                this.provider
-                                          );           
+      this.provider = new ethers.JsonRpcProvider(PROVIDERADDRESS);    
    }
 
    getPoolContract() {
@@ -32,31 +27,32 @@ export class Blockchain {
       if (this.Rewards) return this.Rewards;
       return this.Rewards = new Rewards(this.provider, ethers)
    }
-   getWETH10Contract() {
+   getWETH10() {
       if (this.WETH10) return this.WETH10;
       return this.WETH10 = new WETH10(this.provider, ethers)
    }
-   getSLYXContract() {
+   getSLYX() {
       if (this.SLYX) return this.SLYX;   
       return this.SLYX = new SLYX(this.provider, ethers)
    }
-
-
+   getPair() {
+      if (this.Pair) return this.Pair;   
+      return this.Pair = new Pair(this.provider, ethers)
+   }
+   
+   getProvider() {
+      return this.provider;
+   }
 
    async tvl() {
       // THIS IS A SIMPLIFICATION OF THE TVL
       // To calculate the real TVL, one would have to consider the amounts
       // of both LYX and sLYX, convert to a common currency like dollar,
       // and sum the two.
-      const pairSLYX = await this.pair.totalSupply();
-      const pairAddress = await this.pair.getAddress();
-      const pairLYX = await this.getWETH10Contract().balanceOf(pairAddress);
+      const pairSLYX = await this.getSLYX().balanceOf(this.getPair().getAddress());
+      const pairLYX = await this.getWETH10().balanceOf(this.getPair().getAddress());
       console.log("Total liquidity in the pool: " + ethers.formatUnits(pairSLYX + pairLYX, "ether") + " (sLYX + LYX)");
       return ethers.formatUnits(pairSLYX + pairLYX, "ether");
-   }
-
-   async tvl2() {
-      //await this.pair.queryFilter("Swap(address,uint,uint,uint,uint,address)")
    }
 
    async sevenDayVolume() {
@@ -64,7 +60,7 @@ export class Blockchain {
       this.provider.getBlockNumber().then((result) => now = result);
 
       var sevenDayVolume = BigInt(0);
-      await this.pair.queryFilter("Swap(address,uint,uint,uint,uint,address)")
+      await this.getPair().getContract().queryFilter("Swap(address,uint,uint,uint,uint,address)")
                      .then(
                            ((result) => {
                               console.log("Found "+result.length+" total events.");
@@ -79,12 +75,5 @@ export class Blockchain {
                            })
                      )
          return sevenDayVolume;
-      }
-
-
-      // ----------------- Utility methods --------------------
-
-      minutesSinceBlock(blockNo) {
-         return 1;
       }
 }

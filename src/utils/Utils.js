@@ -62,6 +62,10 @@ export const Utils = {
 
     weiToEthString: function(valueInWei) {
       return ethers.formatEther(valueInWei)
+    },
+
+    ethToWei: function(valueInEth) {
+      return ethers.parseUnits(valueInEth,"ether")
     }
 
 }
