@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/leequid-metrics/static/css/main.b9da8a98.css",
-    "main.js": "/leequid-metrics/static/js/main.a7b978b8.js",
+    "main.js": "/leequid-metrics/static/js/main.8673570d.js",
     "static/js/787.9bcbc839.chunk.js": "/leequid-metrics/static/js/787.9bcbc839.chunk.js",
     "index.html": "/leequid-metrics/index.html",
     "main.b9da8a98.css.map": "/leequid-metrics/static/css/main.b9da8a98.css.map",
-    "main.a7b978b8.js.map": "/leequid-metrics/static/js/main.a7b978b8.js.map",
+    "main.8673570d.js.map": "/leequid-metrics/static/js/main.8673570d.js.map",
     "787.9bcbc839.chunk.js.map": "/leequid-metrics/static/js/787.9bcbc839.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.b9da8a98.css",
-    "static/js/main.a7b978b8.js"
+    "static/js/main.8673570d.js"
   ]
 }
