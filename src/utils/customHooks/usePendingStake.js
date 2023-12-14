@@ -1,6 +1,5 @@
 import {ethers} from 'ethers';
 import { useEffect, useState} from 'react'
-import { act } from 'react-dom/test-utils';
 
 const usePendingStake = (blockchain) => {
   const [pendingStake, setPendingStake] = useState({activeValidators: "", pendingValidators: "", ratio: 0, poolBalance: 0});
@@ -8,7 +7,7 @@ const usePendingStake = (blockchain) => {
   function calculatePendingRatio(_activeValidators, _pendingValidators, _poolBalance) {
     const validatorDepositSize = ethers.parseUnits("32", "ether")
     const unbornValidators =  _poolBalance / validatorDepositSize;
-    return Number(((unbornValidators + _pendingValidators) * 100n) / _activeValidators) / 100
+    return Number(((unbornValidators + _pendingValidators) * 10000n) / _activeValidators) / 10000
   }
 
   useEffect(() => {

@@ -21,13 +21,13 @@ const LiquidityPoolRatio = ({blockchain}) => {
 
   const getRatioAsNumber = (tokenA, tokenB) => {
     if (tokenB == 0) return 0;
-    return Number(tokenA * 100000n / tokenB) / 100000
+    return Number(tokenA * 1000000n / tokenB) / 1000000
   }
 
   return (
     <>
-      <p>1 sLYX = <strong>{getRatioAsNumber(balances.sLYX, balances.LYX).toString()} LYX</strong></p>
-      <p>1 LYX = <strong>{getRatioAsNumber(balances.LYX, balances.sLYX)} sLYX</strong></p>
+      <p>1 sLYX = <strong>{getRatioAsNumber(balances.sLYX, balances.LYX).toFixed(5)} LYX</strong></p>
+      <p>1 LYX = <strong>{getRatioAsNumber(balances.LYX, balances.sLYX).toFixed(5)} sLYX</strong></p>
     </> 
   
   )

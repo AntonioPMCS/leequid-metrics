@@ -3,8 +3,9 @@ import PendingStakeGauge from './PendingStakeGauge'
 import { Stack } from '@mui/material'
 import usePendingStake from '../../../utils/customHooks/usePendingStake'
 
-const PendingStake = ({blockchain, width, height}) => {
+const PendingStake = ({blockchain}) => {
   const pendingStake = usePendingStake(blockchain);
+  console.log(pendingStake)
 
   return (
     <div>
@@ -14,11 +15,9 @@ const PendingStake = ({blockchain, width, height}) => {
         <p>Pending validators: <strong>{pendingStake.pendingValidators === null ? "loading..." : pendingStake.pendingValidators.toString()}</strong></p>
       </Stack> 
       <p>Current dilution: <strong>{pendingStake.ratio}%</strong></p>
-      <PendingStakeGauge 
-        value = {pendingStake.ratio} 
-        width={width} 
-        height={height}
-      />
+        <PendingStakeGauge 
+          value = {pendingStake.ratio} 
+        />
     </div>
 
   )

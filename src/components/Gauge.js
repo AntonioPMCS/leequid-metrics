@@ -1,5 +1,6 @@
 import React from 'react'
 import { arc, scaleLinear } from 'd3'
+import { Box } from '@mui/material';
 
 const innerRadius = 0.85;
 
@@ -9,7 +10,7 @@ const Gauge = ({value=0.07, min=0, max=100, label, units}) => {
   if ((value > 1) || (value < 0)) {
     return <p>Error. The value provided to the Gauge should be between 0 and 1</p>
   }
-  const gaugeArc= (endAngle = Math.PI / 1.5) => {
+  const gaugeArc = (endAngle = Math.PI / 1.5) => {
     return arc()
     .innerRadius(innerRadius)
     .outerRadius(1)
@@ -37,10 +38,15 @@ const Gauge = ({value=0.07, min=0, max=100, label, units}) => {
   )
 
   return (
+    <div>
+      <Box>
+        
+
+        
+      </Box>
       <svg 
         width="20em" 
-        viewBox={[-1, -1, 2, 2,].join(" ")} 
-        style={{border:"1px solid pink"}}
+        viewBox={[-1, -1, 2, 1.6,].join(" ")} 
       >
         <path d={gaugeArc()} fill="#dbdbe7" />
         <path d={gaugeArc(angle)} fill="#9980FA" />
@@ -58,7 +64,39 @@ const Gauge = ({value=0.07, min=0, max=100, label, units}) => {
           strokeWidth="0.01"
           fill={"#9980FA"}
         />
+        <path
+          d="M0.136364 0.0290102C0.158279 -0.0096701 0.219156 -0.00967009 0.241071 0.0290102C0.297078 0.120023 0.375 0.263367 0.375 0.324801C0.375 0.422639 0.292208 0.5 0.1875 0.5C0.0852272 0.5 -1.8346e-08 0.422639 -9.79274e-09 0.324801C0.00243506 0.263367 0.0803571 0.120023 0.136364 0.0290102ZM0.1875 0.381684C0.221591 0.381684 0.248377 0.356655 0.248377 0.324801C0.248377 0.292947 0.221591 0.267918 0.1875 0.267918C0.153409 0.267918 0.126623 0.292947 0.126623 0.324801C0.126623 0.356655 0.155844 0.381684 0.1875 0.381684Z"
+          transform={`rotate(${
+            angle * (180 / Math.PI)
+          }) translate(-0.2, -0.33)`}
+          fill="#6a6a85"
+        />
       </svg>
+
+      <div style={{
+        marginTop: "-0.5em",
+        fontSize: "3em",
+        lineHeight: "1em",
+        fontWeight: "900",
+        fontFeatureSettings: "'zero', 'tnum' 1",
+        textAlign:'center',
+      }}>
+        { (value.toFixed(2))+'%' }
+      </div>
+
+      {!!label && (
+        <div style={{
+          color: "#8b8ba7",
+          marginTop: "0.2em",
+          fontSize: "1.3em",
+          lineHeight: "1.3em",
+          fontWeight: "700",
+          textAlign:'center',
+        }}>
+          { label }
+        </div>
+      )}
+    </div>
   )
 }
 
