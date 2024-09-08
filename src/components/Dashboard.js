@@ -22,7 +22,7 @@ const Dashboard = ({blockchain}) => {
   };
 
   async function fetchSLYXSupply() {
-    
+    console.log("Fetching sLYX supply...")
     try {
       return blockchain.getSLYX().totalSupply()
               .then((response) => {
@@ -38,12 +38,16 @@ const Dashboard = ({blockchain}) => {
 
   useEffect(() => {
     const init = async () => {
-      const consensusStats = await fetchConsensusStats();
-      const currentAPR = Utils.calculateStakingRewards({ totalAtStake: consensusStats.data.validatorscount * 32 });
-      console.log(currentAPR + "%");
-      setStakingAPR(currentAPR);
-      const sLYXSupply = await fetchSLYXSupply()
-      setLeequidDominance(Number(sLYXSupply * 10000n / (BigInt(consensusStats.data.validatorscount) * Utils.ethToWei('32'))) / 10000);
+      try {
+        const consensusStats = await fetchConsensusStats();
+        const currentAPR = Utils.calculateStakingRewards({ totalAtStake: consensusStats.data.validatorscount * 32 });
+        console.log(currentAPR + "%");
+        setStakingAPR(currentAPR);
+        const sLYXSupply = await fetchSLYXSupply()
+        setLeequidDominance(Number(sLYXSupply * 10000n / (BigInt(consensusStats.data.validatorscount) * Utils.ethToWei('32'))) / 10000);
+      } catch (error) {
+        console.log(error)
+      }
     }
     init();
   }, []);
@@ -51,16 +55,17 @@ const Dashboard = ({blockchain}) => {
 
   return (
     <div>
-      {lyxPrice && sLYXSupply &&
+      { lyxPrice && sLYXSupply &&
         <Stack direction="row" spacing={3} marginBottom="15px">
           <p>LYX price: <strong>${lyxPrice.toLocaleString('en-US')}</strong></p>
           <p>sLYX Total Supply: <strong>{new Intl.NumberFormat('en-us').format(Number(Utils.weiToEth(sLYXSupply)))}</strong></p>
         </Stack>
-         
       }
-      {stakingAPR && leequidDominance &&
+
+      { stakingAPR && leequidDominance &&
         <StakingPool  blockchain={blockchain} stakingAPR={stakingAPR} dominance={leequidDominance} lyxPrice={lyxPrice}/>
       }
+
       { lyxPrice && stakingAPR &&
         <LiquidityPool 
           blockchain={blockchain} 
@@ -68,7 +73,6 @@ const Dashboard = ({blockchain}) => {
           stakingAPR={stakingAPR}
         />
       }
-      
     </div>
   )
 }

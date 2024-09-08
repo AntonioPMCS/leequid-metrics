@@ -1,4 +1,5 @@
-export const PROVIDERADDRESS = 'https://rpc.lukso.gateway.fm';
+export const PROVIDERADDRESS1 = 'https://rpc.lukso.sigmacore.io';
+export const PROVIDERADDRESS2 = 'https://42.rpc.thirdweb.com';
 export const SLOTSIN7DAYS = 50400;
 export const SLOTSIN1DAY = 7200;
 export const PAIRADDRESS = "0xB9ddaE8a609167472549f7A68425c47Dba3515EC";

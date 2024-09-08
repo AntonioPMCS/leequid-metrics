@@ -1,5 +1,5 @@
 import { ethers } from 'ethers';
-import { PROVIDERADDRESS, SLOTSIN7DAYS } from './constants'
+import { SLOTSIN7DAYS } from './constants'
 
 import {Rewards} from '../contracts/Rewards'
 import {SLYX} from '../contracts/SLYX'
@@ -15,8 +15,12 @@ export class Blockchain {
    Pair;
    provider = {}
 
-   constructor () {
-      this.provider = new ethers.JsonRpcProvider(PROVIDERADDRESS);    
+   constructor (_providerAddress) {
+      this.provider = new ethers.JsonRpcProvider(_providerAddress); 
+   }
+
+   async testConnection() {
+      return await this.provider._getConnection().send();
    }
 
    getPool() {
@@ -41,6 +45,7 @@ export class Blockchain {
    }
    
    getProvider() {
+      console.log(this.provider)
       return this.provider;
    }
 
