@@ -31,7 +31,8 @@ const StakingPool = ({blockchain, stakingAPR, dominance, lyxPrice}) => {
                height={370}
                 />
          </Stack>   
-         <RewardProvenance width={400} height={400}/>      
+         {//<RewardProvenance width={400} height={400}/>  
+         }
       </Box>
    )
 }
